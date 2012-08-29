@@ -12,6 +12,7 @@ import org.restlet.Server;
 import org.restlet.data.MediaType;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
+import org.restlet.routing.Router;
 
 public class MailServerApplication extends Application {
 	
@@ -35,11 +36,19 @@ public class MailServerApplication extends Application {
 		Tracer tracer;
 		retval = tracer = new Tracer(getContext());
 		
-		// Uncomment these for blocking
+		// IP address based blocking
 		Blocker blocker;
 		retval = blocker = new Blocker(getContext());
 		blocker.getBlockedAddresses().add("0:0:0:0:0:0:0:1%0");	// or "127.0.0.1", or comment out
 		blocker.setNext(tracer);
+		
+		// URI Routing
+		String baseURI = "http://localhost:8111/";
+		Router router;
+		retval = router = new Router(getContext());
+		router.attach(baseURI,tracer);
+		router.attach(baseURI+"accounts/",tracer);
+		router.attach(baseURI+"accounts/{accountId}",blocker);
 		
 		// Return the Restlet
 		return retval;
