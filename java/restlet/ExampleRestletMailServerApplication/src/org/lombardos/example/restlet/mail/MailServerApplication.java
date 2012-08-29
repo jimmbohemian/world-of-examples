@@ -32,23 +32,24 @@ public class MailServerApplication extends Application {
 	public Restlet createInboundRoot(){
 		Restlet retval = null;
 		
-		// Tracer is our actual app
-		Tracer tracer;
-		retval = tracer = new Tracer(getContext());
-		
-		// IP address based blocking
-		Blocker blocker;
-		retval = blocker = new Blocker(getContext());
-		blocker.getBlockedAddresses().add("0:0:0:0:0:0:0:1%0");	// or "127.0.0.1", or comment out
-		blocker.setNext(tracer);
+//		// Tracer is our actual app
+//		Tracer tracer;
+//		retval = tracer = new Tracer(getContext());
+//		
+//		// IP address based blocking
+//		Blocker blocker;
+//		retval = blocker = new Blocker(getContext());
+//		blocker.getBlockedAddresses().add("0:0:0:0:0:0:0:1%0");	// or "127.0.0.1", or comment out
+//		blocker.setNext(tracer);
 		
 		// URI Routing
 		String baseURI = "http://localhost:8111/";
 		Router router;
 		retval = router = new Router(getContext());
-		router.attach(baseURI,tracer);
-		router.attach(baseURI+"accounts/",tracer);
-		router.attach(baseURI+"accounts/{accountId}",blocker);
+//		router.attach(baseURI,tracer);
+//		router.attach(baseURI+"accounts/",tracer);
+//		router.attach(baseURI+"accounts/{accountId}",blocker);
+		router.attach(baseURI,RootServerResource.class);
 		
 		// Return the Restlet
 		return retval;
