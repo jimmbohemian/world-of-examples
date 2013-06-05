@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.vogella.android.listview.R;
 
 import java.util.ArrayList;
@@ -36,23 +37,33 @@ public class ListViewExampleActivity extends Activity {
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
+            public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
+                Toast.makeText(getApplicationContext(),
+                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        .show();
             }
-
         });
+
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, final View view,
+//                                    int position, long id) {
+//                final String item = (String) parent.getItemAtPosition(position);
+//                view.animate().setDuration(2000).alpha(0)
+//                        .withEndAction(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                list.remove(item);
+//                                adapter.notifyDataSetChanged();
+//                                view.setAlpha(1);
+//                            }
+//                        });
+//            }
+//
+//        });
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
