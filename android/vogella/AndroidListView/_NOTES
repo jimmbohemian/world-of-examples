@@ -1,0 +1,2 @@
+android create project -n AndroidListView --target android-17 -p AndroidListView -k com.vogella.android.listview -a ListViewExampleActivity
+http://www.vogella.com/articles/AndroidListView/article.html
